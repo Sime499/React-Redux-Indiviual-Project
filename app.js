@@ -1,13 +1,17 @@
+
 const express = require("express");
 const models = require("./models");
 const cors = require("cors");
 const bodyparser = require("body-parser");
 const app = express();
+const port = process.env.PORT || 3000;
+
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urllencoded())
 
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   res.send("product");
 });
 
@@ -27,12 +31,10 @@ app.post("/api/blog", (req, res) => {
     description: description,
     imageURL: imageURL,
   });
-  //save a product
+
   blog.save().then(saved => {
     res.json({ sucess: true, blogID: savedblog.id });
   });
 });
 
-app.listen(3080, (req, res) => {
-  console.log("server is running..");
-});
+app.listen(port, () => console.log(` listening on port `));
